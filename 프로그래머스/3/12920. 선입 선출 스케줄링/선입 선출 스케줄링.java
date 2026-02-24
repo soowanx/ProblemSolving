@@ -9,8 +9,6 @@ import java.util.*;
 
 class Solution {
     public int solution(int n, int[] cores) {
-        int answer = -1;
-
         // 이분탐색: 시간 t까지 처리 가능한 작업의 수가 n 이상이 되는 최소 t 찾기
         int left = 1;
         int right = 10000 * 10000;
@@ -38,7 +36,7 @@ class Solution {
             }
         }
         
-        return answer;
+        return 0;
     }
     
     int getWork(int[] cores, int mid) {
