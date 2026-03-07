@@ -1,8 +1,8 @@
 /*
 dfs (조합, 합 생성), 이분탐색 (승리 수 계산)
-1. 
-2. 
-3. 
+1. 조합 생성 (dfs)
+2. 조합의 합 구하기 (dfs)
+3. 승리 횟수 구하기 (이분탐색)
 */
 
 import java.util.*;
@@ -56,6 +56,7 @@ class Solution {
     int countWin(int[][] dice, List<Integer> listA, List<Integer> listB) {
         int len = listA.size();
         
+        // 합 구하기
         int[] arrA = new int[(int) Math.pow(6, len)];
         int[] arrB = new int[(int) Math.pow(6, len)];
         
