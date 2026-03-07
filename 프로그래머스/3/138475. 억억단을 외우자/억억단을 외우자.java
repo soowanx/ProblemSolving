@@ -15,10 +15,9 @@ class Solution {
         }
         
         // 범위 dp
-        int max = -1;
-        int[] num = new int[e + 1];
+        int max = cnt[e];
         
-        max = cnt[e];
+        int[] num = new int[e + 1];
         num[e] = e;
         
         for (int i = e - 1; i >= 1; i--) {
