@@ -29,13 +29,7 @@ class Solution {
             String c = st.nextToken();
             
             // a, b, c 중 가장 큰 한 자리 수
-            StringBuilder sb = new StringBuilder();
-            
-            if (isX) sb.append(a).append(b);
-            else sb.append(a).append(b).append(c);
-            
-            int maxNum = -1;
-            for (char ch : sb.toString().toCharArray()) maxNum = Math.max(maxNum, (ch - '0'));
+            int maxNum = getMaxNum(isX, a, b, c);
             for (int i = 2; i <= maxNum; i++) possible[i] = false;
             
             // 진법 변환 후 계산
@@ -81,12 +75,23 @@ class Solution {
         
         return op == '+' ? numA + numB : numA - numB;
     }
-    
+        
     boolean isSame (String a, String b, String c, char op, int radix) {
         int numA = Integer.parseInt(a, radix);
         int numB = Integer.parseInt(b, radix);
         int numC = Integer.parseInt(c, radix);
         
         return op == '+' ? numA + numB == numC : numA - numB == numC;
+    }
+    
+    int getMaxNum(boolean isX, String a, String b, String c) {
+        StringBuilder sb = new StringBuilder();
+
+        if (isX) sb.append(a).append(b);
+        else sb.append(a).append(b).append(c);
+        
+        int maxNum = -1;
+        for (char ch : sb.toString().toCharArray()) maxNum = Math.max(maxNum, (ch - '0'));
+        return maxNum;
     }
 }
