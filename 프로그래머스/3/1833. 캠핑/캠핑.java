@@ -15,21 +15,31 @@ class Solution {
         });
         
         for (int i = 0; i < n - 1; i++) {
-            for (int j = i + 1; j < n; j++) {
-                if (data[i][0] == data[j][0] || data[i][1] == data[j][1]) continue;
+            TreeSet<Integer> set = new TreeSet();
+            
+            int j = i + 1;
+            
+            while (j < n) {
+                int tempJ = j;
                 
-                boolean check = true;
+                // 같은 x 그룹 중 끝 찾기
+                while (j < n && data[tempJ][0] == data[j][0]) j++;
                 
-                for (int k = i + 1; k < j; k++) {
-                    if ((data[i][0] < data[k][0] && data[k][0] < data[j][0]) && 
-                        (Math.min(data[i][1], data[j][1]) < data[k][1] && 
-                        data[k][1] < Math.max(data[i][1], data[j][1]))) {
-                        check = false;
-                        break;
+                // 검사
+                for (int k = tempJ; k < j; k++) {
+                    int y1 = data[i][1];
+                    int y2 = data[k][1];
+                    
+                    if (data[i][0] != data[k][0] && y1 != y2) {
+                        Integer inside = set.higher(Math.min(y1, y2));
+                        
+                        if (inside == null || inside >= Math.max(y1, y2)) answer++;
                     }
                 }
                 
-                if (check) answer++;
+                for (int k = tempJ; k < j; k++) {
+                    if (data[k][0] != data[i][0]) set.add(data[k][1]);
+                }
             }
         }
         
