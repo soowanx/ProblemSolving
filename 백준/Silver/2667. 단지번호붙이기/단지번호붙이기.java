@@ -3,12 +3,12 @@ import java.io.*;
 
 public class Main {
     static List<Integer> list = new ArrayList<>();
-    static int[][] house;
+    static boolean[][] house;
 
     static void bfs(int n, int i, int j) {
         Queue<int[]> queue = new LinkedList<>();
 
-        house[i][j] = 0;
+        house[i][j] = false;
         queue.add(new int[] {i, j});
         int count = 1;
 
@@ -25,8 +25,8 @@ public class Main {
                 int nr = r + dr[d];
                 int nc = c + dc[d];
 
-                if (nr >= 0 && nr < n && nc >= 0 && nc < n && house[nr][nc] == 1) {
-                    house[nr][nc] = 0;
+                if (nr >= 0 && nr < n && nc >= 0 && nc < n && house[nr][nc]) {
+                    house[nr][nc] = false;
                     queue.add(new int[] {nr, nc});
                     count++;
                 }
@@ -39,7 +39,7 @@ public class Main {
     static void solution(int n) {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                if (house[i][j] == 1) {
+                if (house[i][j]) {
                     bfs(n, i, j);
                 }
             }
@@ -48,14 +48,14 @@ public class Main {
         // return
         StringBuilder sb = new StringBuilder();
 
-        sb.append(list.size()).append("\n");
+        sb.append(list.size());
 
         list.sort((a, b) -> {
             return Integer.compare(a, b);
         });
 
         for (int l = 0; l < list.size(); l++) {
-            sb.append(list.get(l)).append("\n");
+            sb.append("\n").append(list.get(l));
         }
 
         System.out.println(sb);
@@ -69,14 +69,14 @@ public class Main {
         int n = Integer.parseInt(br.readLine());
 
         // 나중에 boolean으로 바꿔보기
-        house = new int[n][n];
+        house = new boolean[n][n];
 
         for (int i = 0; i < n; i++) {
             char[] temp = br.readLine().toCharArray();
 
             for (int j = 0; j < n; j++) {
                 if (temp[j] == '1') {
-                    house[i][j] = 1;
+                    house[i][j] = true;
                 }
             }
         }
