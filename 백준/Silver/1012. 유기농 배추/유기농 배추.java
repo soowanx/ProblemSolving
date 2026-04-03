@@ -2,14 +2,14 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    static int[] dr = {1, -1, 0, 0};
-    static int[] dc = {0, 0, 1, -1};
-
     static void bfs(int m, int n, int i, int j, boolean[][] arr) {
         Queue<int[]> queue = new LinkedList<>();
 
         queue.add(new int[] {i, j});
         arr[i][j] = false;
+
+        int[] dr = {1, -1, 0, 0};
+        int[] dc = {0, 0, 1, -1};
 
         while (!queue.isEmpty()) {
             int[] cur = queue.poll();
