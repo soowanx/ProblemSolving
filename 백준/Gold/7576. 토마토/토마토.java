@@ -6,25 +6,6 @@ public class Main {
     static int[] dc = {0, 0, 1, -1};
 
     static int solution (int n, int m, int[][] arr) {
-        boolean finish = true;
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (arr[i][j] == 0) {
-                    finish = false;
-                    break;
-                }
-            }
-
-            if (!finish) {
-                break;
-            }
-        }
-
-        if (finish) {
-            return 0;
-        }
-
         Queue<int[]> queue = new LinkedList<>();
 
         for (int i = 0; i < n; i++) {
