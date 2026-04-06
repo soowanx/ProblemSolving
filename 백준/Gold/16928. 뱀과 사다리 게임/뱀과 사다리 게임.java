@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    static int solution (int n, int m, Map<Integer, Integer> map) {
+    static int solution (Map<Integer, Integer> map) {
         Queue<int[]> queue = new LinkedList<>();
         boolean[] visited = new boolean[101];
 
@@ -23,16 +23,12 @@ public class Main {
                 int next = num + i;
 
                 if (next <= 100 && !visited[next]) {
-                    visited[next] = true;
-
                     if (map.containsKey(next)) {
-                        int value = map.get(next);
+                        next = map.get(next);
+                    }
 
-                        if (!visited[value]) {
-                            visited[value] = true;
-                            queue.add(new int[] {value, cnt + 1});
-                        }
-                    } else {
+                    if (!visited[next]) {
+                        visited[next] = true;
                         queue.add(new int[] {next, cnt + 1});
                     }
                 }
@@ -72,6 +68,6 @@ public class Main {
             map.put(from, to);
         }
 
-        System.out.println(solution(n, m, map));
+        System.out.println(solution(map));
     }
 }
