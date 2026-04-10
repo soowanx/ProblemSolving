@@ -2,19 +2,7 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    static int[] solution (int n, int eCount, int[][] edges, int start, int end1, int end2) {
-        // 그래프 초기화
-        List<List<int[]>> graph = new ArrayList<>();
-
-        for (int i = 0; i <= n; i++) {
-            graph.add(new ArrayList<>());
-        }
-
-        for (int[] edge : edges) {
-            graph.get(edge[0]).add(new int[] {edge[1], edge[2]});
-            graph.get(edge[1]).add(new int[] {edge[0], edge[2]});
-        }
-
+    static int[] solution (int n, List<List<int[]>> graph, int start, int end1, int end2) {
         // dist 배열 초기화
         int[] dist = new int[n + 1];
         Arrays.fill(dist, Integer.MAX_VALUE);
@@ -68,6 +56,18 @@ public class Main {
             edges[i][2] = Integer.parseInt(st.nextToken());
         }
 
+        // 그래프 초기화
+        List<List<int[]>> graph = new ArrayList<>();
+
+        for (int i = 0; i <= n; i++) {
+            graph.add(new ArrayList<>());
+        }
+
+        for (int[] edge : edges) {
+            graph.get(edge[0]).add(new int[] {edge[1], edge[2]});
+            graph.get(edge[1]).add(new int[] {edge[0], edge[2]});
+        }
+
         st = new StringTokenizer(br.readLine());
         int v1 = Integer.parseInt(st.nextToken());
         int v2 = Integer.parseInt(st.nextToken());
@@ -80,17 +80,17 @@ public class Main {
 
         // 1 -> v1, v2
         int[] answer;
-        answer = solution(n, eCount, edges, 1, v1, v2);
+        answer = solution(n, graph, 1, v1, v2);
         dist1[0] = answer[0];
         dist2[0] = answer[1];
 
         // v1 -> v2, n
-        answer = solution(n, eCount, edges, v1, v2, n);
+        answer = solution(n, graph, v1, v2, n);
         dist1[1] = answer[0];
         dist2[2] = answer[1];
 
         // v2 -> v1, n
-        answer = solution(n, eCount, edges, v2, v1, n);
+        answer = solution(n, graph, v2, v1, n);
         dist2[1] = answer[0];
         dist1[2] = answer[1];
 
