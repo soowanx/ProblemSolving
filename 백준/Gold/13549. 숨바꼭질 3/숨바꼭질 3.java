@@ -27,6 +27,10 @@ public class Main {
                 return time;
             }
 
+            if (time > dist[pos]) {
+                continue;
+            }
+
             int next = pos * 2;
             if (next <= 200000 && time < dist[next]) {
                 dist[next] = time;
