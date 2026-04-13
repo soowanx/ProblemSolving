@@ -5,10 +5,10 @@ public class Main {
     static boolean[] getPrime(int n) {
         boolean[] prime = new boolean[n + 1];
         Arrays.fill(prime, true);
-
+        
         prime[0] = false;
         prime[1] = false;
-
+        
         for (int i = 2; i * i <= n; i++) {
             if (prime[i]) {
                 for (int j = i * i; j <= n; j += i) {
@@ -16,10 +16,10 @@ public class Main {
                 }
             }
         }
-
+        
         return prime;
     }
-
+    
     static void solution(int n) {
         if (n == 1) {
             System.out.println(0);
@@ -38,31 +38,25 @@ public class Main {
             }
         }
 
-        int[] arr = new int[list.size()];
-
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = list.get(i);
-        }
-
         // 투포인터
         int left = 0;
         int right = 0;
 
-        int sum = arr[left];
+        int sum = list.get(0);
         int answer = 0;
 
         while (true) {
             if (sum < n) {
-                if (right >= arr.length - 1) {
+                if (right >= list.size() - 1) {
                     break;
                 }
 
-                sum += arr[++right];
+                sum += list.get(++right);
             } else if (sum > n) {
-                sum -= arr[left++];
+                sum -= list.get(left++);
             } else {
                 answer++;
-                sum -= arr[left++];
+                sum -= list.get(left++);
             }
         }
 
