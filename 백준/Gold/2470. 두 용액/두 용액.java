@@ -30,7 +30,6 @@ public class Main {
             }
         }
 
-        Arrays.sort(answer);
         StringBuilder sb = new StringBuilder();
         sb.append(answer[0]).append(" ").append(answer[1]);
         System.out.println(sb);
