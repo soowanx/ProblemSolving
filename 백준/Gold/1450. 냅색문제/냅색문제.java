@@ -23,7 +23,7 @@ public class Main {
         if (sum > c) {
             return;
         }
-        
+
         if (idx == arr.length) {
             list.add(sum);
             return;
@@ -57,19 +57,13 @@ public class Main {
         long count = 0;
 
         for (int left : leftSum) {
-            int remain = c - left;
-            count += getCount(rightSum, remain);
+            count += getCount(rightSum, c - left);
         }
 
         System.out.println(count);
     }
 
     public static void main(String[] args) throws IOException {
-        /*
-        n개의 물건. 최대 c 무게를 담는 가방.
-        n개의 물건을 가방에 넣는 방법의 수
-         */
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
