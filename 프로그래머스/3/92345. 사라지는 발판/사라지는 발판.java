@@ -6,7 +6,10 @@ class Solution {
     int m;
     
     int[] dfs(int[][] board, int cr, int cc, int or, int oc) {
+        // System.out.println("ENTER: cur=(" + cr + "," + cc + "), op=(" + or + "," + oc + ")");
+        
         if (board[cr][cc] == 0) {
+            // System.out.println("LOSE immediately at (" + cr + "," + cc + ")");
             return new int[] {0, 0};
         }
         
