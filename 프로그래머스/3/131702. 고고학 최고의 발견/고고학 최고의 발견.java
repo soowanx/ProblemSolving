@@ -8,9 +8,9 @@ class Solution {
     int[][] board;
     int answer = Integer.MAX_VALUE;
     
-    void flip(int[][] arr, int r, int c) {
+    void flip(int[][] arr, int r, int c, int need) {
         // 자기 자신
-        arr[r][c] = (arr[r][c] + 1) % 4;
+        arr[r][c] = (arr[r][c] + need) % 4;
         
         // 인접 
         for (int i = 0; i < 4; i++) {
@@ -21,7 +21,7 @@ class Solution {
                 continue;
             }
             
-            arr[nr][nc] = (arr[nr][nc] + 1) % 4;
+            arr[nr][nc] = (arr[nr][nc] + need) % 4;
         }
     }
     
@@ -48,9 +48,7 @@ class Solution {
                         
                         total += need;
                         
-                        for (int k = 0; k < need; k++) {
-                            flip(temp, r, c);
-                        }
+                        flip(temp, r, c, need);
                     }
                 }
             }
@@ -67,15 +65,11 @@ class Solution {
         
         // 뒤집기 - dfs - 복구
         for (int cnt = 0; cnt < 4; cnt++) {
-            for (int k = 0; k < cnt; k++) {
-                flip(board, 0, col);
-            }
+            flip(board, 0, col, cnt);
             
             dfs(col + 1, count + cnt);
             
-            for (int k = 0; k < (4 - cnt) % 4; k++) {
-                flip(board, 0, col);
-            }
+            flip(board, 0, col, (4 - cnt) % 4);
         }
     }
     
