@@ -10,41 +10,92 @@
 import java.util.*;
 
 class Solution {
-    public int solution(int[][] beginning, int[][] target) {
-        int answer = Integer.MAX_VALUE;
-        int r = target.length;
-        int c = target[0].length;
+    int r, c;
+    int[][] beginning, target;
+    int answer = Integer.MAX_VALUE;
+    
+    void solve(int[] row, int rowCount) {
+        int[] col = new int[c];
         
-        for (int mask = 0; mask < (1 << r); mask++) {
-            // 뒤집은 행 개수 계산. 1이면 뒤집고 0이면 그대로
-            int rowCount = Integer.bitCount(mask);
-            boolean possible = true;
-            
-            // 열 뒤집기 결정 (첫 행 기준)
-            int[] col = new int[c];
-            for (int j = 0; j < c; j++) col[j] = beginning[0][j] ^ target[0][j] ^ (mask & 1);
-            
-            // 열 뒤집기 검증
-            for (int i = 1; i < r && possible; i++) {
-                for (int j = 0; j < c; j++) {
-                    int value = beginning[i][j] ^ col[j] ^ ((mask >> i) & 1);
-                    
-                    if (value != target[i][j]) {
-                        possible = false;
-                        break;
-                    }
-                }
-            }
-            
-            // 최솟값 갱신
-            if (possible) {
-                int colCount = 0;
-                for (int j = 0; j < c; j++) if (col[j] == 1) colCount++;
-                answer = Math.min(answer, rowCount + colCount);
+        for (int j = 0; j < c; j++) {
+            int val = beginning[0][j] ^ row[0];
+            col[j] = (val == target[0][j]) ? 0 : 1;
+        }
+        
+        for (int i = 1; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                int val = beginning[i][j] ^ row[i] ^ col[j];
+                if (val != target[i][j]) return;
             }
         }
         
+        int colCount = 0;
+        for (int x : col) colCount += x;
+        
+        answer = Math.min(answer, rowCount + colCount);
+    }
+    
+    void dfs(int row, int[] rowFlip, int rowCount) {
+        if (rowCount >= answer) return;
+        
+        if (row == r) {
+            solve(rowFlip, rowCount);
+            return;
+        }
+        
+        rowFlip[row] = 0;
+        dfs(row + 1, rowFlip, rowCount);
+        
+        rowFlip[row] = 1;
+        dfs(row + 1, rowFlip, rowCount + 1);
+    }
+    
+    public int solution(int[][] beginning, int[][] target) {
+        // dfs
+        this.beginning = beginning;
+        this.target = target;
+        r = beginning.length;
+        c = beginning[0].length;
+        
+        dfs(0, new int[r], 0);
         
         return answer == Integer.MAX_VALUE ? -1 : answer;
+        
+        // bitmask
+//         int answer = Integer.MAX_VALUE;
+//         int r = target.length;
+//         int c = target[0].length;
+        
+//         for (int mask = 0; mask < (1 << r); mask++) {
+//             // 뒤집은 행 개수 계산. 1이면 뒤집고 0이면 그대로
+//             int rowCount = Integer.bitCount(mask);
+//             boolean possible = true;
+            
+//             // 열 뒤집기 결정 (첫 행 기준)
+//             int[] col = new int[c];
+//             for (int j = 0; j < c; j++) col[j] = beginning[0][j] ^ target[0][j] ^ (mask & 1);
+            
+//             // 열 뒤집기 검증
+//             for (int i = 1; i < r && possible; i++) {
+//                 for (int j = 0; j < c; j++) {
+//                     int value = beginning[i][j] ^ col[j] ^ ((mask >> i) & 1);
+                    
+//                     if (value != target[i][j]) {
+//                         possible = false;
+//                         break;
+//                     }
+//                 }
+//             }
+            
+//             // 최솟값 갱신
+//             if (possible) {
+//                 int colCount = 0;
+//                 for (int j = 0; j < c; j++) if (col[j] == 1) colCount++;
+//                 answer = Math.min(answer, rowCount + colCount);
+//             }
+//         }
+        
+        
+//         return answer == Integer.MAX_VALUE ? -1 : answer;
     }
 }
