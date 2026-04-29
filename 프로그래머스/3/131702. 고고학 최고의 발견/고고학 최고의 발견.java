@@ -55,11 +55,66 @@ class Solution {
     }
     
     public int solution(int[][] clockHands) {
+        // dfs
+//         n = clockHands.length;
+//         this.clockHands = clockHands;
+        
+//         dfs(0, 0);
+        
+        // bit mask
         n = clockHands.length;
         this.clockHands = clockHands;
         
-        dfs(0, 0);
+        // 4^n = 2^(2n)
+        int max = 1 << (2 * n);
+        
+        for (int mask = 0; mask < max; mask++) {
+            int[][] arr = new int[n][n];
+            int total = 0;
+            
+            // 1행
+            for (int c = 0; c < n; c++) {
+                int k = (mask >> (2 * c)) & 3;
+                if (k == 0) continue;
+                total += k;
+                spin(0, c, k, arr);
+            }
+            
+            // greedy
+            for (int r = 1; r < n; r++) {
+                for (int c = 0; c < n; c++) {
+                    int val = (clockHands[r - 1][c] + arr[r - 1][c]) & 3;
+                    
+                    if (val != 0) {
+                        int k = (4 - val) & 3;
+                        total += k;
+                        spin(r, c, k, arr);
+                    }
+                }
+            }
+            
+            // 마지막 행
+            boolean ok = true;
+            for (int c = 0; c < n; c++) {
+                if (((clockHands[n - 1][c] + arr[n - 1][c]) & 3) != 0) {
+                    ok = false;
+                    break;
+                }
+            }
+            if (ok) answer = Math.min(answer, total);
+        }
         
         return answer;
+    }
+    
+    void spin(int r, int c, int s, int[][] arr) {
+        for (int i = 0; i < 5; i++) {
+            int nr = r + dr[i];
+            int nc = c + dc[i];
+            
+            if (nr < 0 || nr >= n || nc < 0 || nc >= n) continue;
+            
+            arr[nr][nc] = (arr[nr][nc] + s) & 3;
+        }
     }
 }
